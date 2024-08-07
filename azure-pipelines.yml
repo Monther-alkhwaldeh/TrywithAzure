@@ -22,7 +22,7 @@ steps:
     displayName: 'Install dependencies'
     workingDirectory: $(Build.SourcesDirectory)  # Ensure this points to the directory where requirements.txt is located
 
-  - script: ./.venv/bin/behave
+  - script: ./.venv/bin/behave features
     displayName: 'Run Behave tests'
 
   - task: PublishTestResults@2
