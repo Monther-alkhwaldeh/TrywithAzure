@@ -23,6 +23,9 @@ steps:
       ./.venv/bin/pip install webdriver-manager
     displayName: 'Install dependencies'
     workingDirectory: $(Build.SourcesDirectory)  # Ensure this points to the directory where requirements.txt is located
+  
+  - script: .venv/bin/behave
+    displayName: 'Run Behave tests'
     
   - script: |
       sudo apt-get update
@@ -31,10 +34,7 @@ steps:
       unzip chromedriver_linux64.zip
       sudo mv chromedriver /usr/local/bin/chromedriver
       sudo chmod +x /usr/local/bin/chromedriver
-      displayName: 'Install ChromeDriver'
-  - script: .venv/bin/behave
-    displayName: 'Run Behave tests'
-
+    displayName: 'Install ChromeDriver'
 
   - task: PublishTestResults@2
     inputs:
