@@ -25,6 +25,7 @@ steps:
   - script: ./.venv/bin/behave features
     displayName: 'Run Behave tests'
 
+
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'JUnit'
