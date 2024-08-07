@@ -15,6 +15,9 @@ steps:
   - script: python -m venv .venv
     displayName: 'Create virtual environment'
 
+  - script: ls -la
+    displayName: 'List directory contents'
+
   - script: ./.venv/bin/pip install -r requirments.txt
     displayName: 'Install dependencies'
     workingDirectory: $(Build.SourcesDirectory)  # Ensure this points to the directory where requirements.txt is located
