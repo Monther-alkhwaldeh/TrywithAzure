@@ -1,36 +1,42 @@
-# Python package
-# Create and test a Python package on multiple Python versions.
-# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
-
 trigger:
-- main
+  branches:
+    include:
+      - main
 
 pool:
-  vmImage: ubuntu-latest
-strategy:
-  matrix:
-    Python27:
-      python.version: '2.7'
-    Python35:
-      python.version: '3.5'
-    Python36:
-      python.version: '3.6'
-    Python37:
-      python.version: '3.7'
+  vmImage: 'ubuntu-latest'
 
 steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
 
-- script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
+  - script: python -m venv .venv
+    displayName: 'Create virtual environment'
 
-- script: |
-    pip install pytest pytest-azurepipelines
-    pytest
-  displayName: 'pytest'
+  - script: ./.venv/bin/pip install -r requirements.txt
+    displayName: 'Install dependencies'
+
+  - script: ./.venv/bin/behave features
+    displayName: 'Run Behave tests'
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/allure-results/*.xml'
+      failTaskOnFailedTests: true
+
+  - script: |
+      sudo apt-add-repository ppa:qameta/allure
+      sudo apt-get update
+      sudo apt-get install allure
+    displayName: 'Install Allure'
+
+  - script: behave -f allure_behave.formatter:AllureFormatter -o allure_reports/  features\registration.feature
+    displayName: 'Generate Allure report'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'allure-report'
+      ArtifactName: 'AllureReport'
