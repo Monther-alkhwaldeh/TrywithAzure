@@ -28,7 +28,7 @@ steps:
   - script: |
       sudo apt-get update
       sudo apt-get install -y wget unzip
-      wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
+      wget https://chromedriver.storage.googleapis.com/127.0.6533.99/chromedriver_linux64.zip
       unzip chromedriver_linux64.zip
       sudo mv chromedriver /usr/local/bin/chromedriver
       sudo chmod +x /usr/local/bin/chromedriver
@@ -37,7 +37,7 @@ steps:
   - script: .venv/bin/behave
     displayName: 'Run Behave tests'
 
-  
+
 
   - task: PublishTestResults@2
     inputs:
