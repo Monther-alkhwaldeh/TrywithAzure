@@ -15,7 +15,7 @@ steps:
   - script: python -m venv .venv
     displayName: 'Create virtual environment'
 
-  - script: ./.venv/bin/pip install -r requirements.txt
+  - script: pip install -r requirements.txt
     displayName: 'Install dependencies'
 
   - script: ./.venv/bin/behave features
