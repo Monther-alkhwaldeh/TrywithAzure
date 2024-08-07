@@ -1,0 +1,42 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+
+  - script: python -m venv .venv
+    displayName: 'Create virtual environment'
+
+  - script: ./.venv/bin/pip install -r requirements.txt
+    displayName: 'Install dependencies'
+
+  - script: ./.venv/bin/behave features
+    displayName: 'Run Behave tests'
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/allure-results/*.xml'
+      failTaskOnFailedTests: true
+
+  - script: |
+      sudo apt-add-repository ppa:qameta/allure
+      sudo apt-get update
+      sudo apt-get install allure
+    displayName: 'Install Allure'
+
+  - script: behave -f allure_behave.formatter:AllureFormatter -o allure_reports/  features\registration.feature
+    displayName: 'Generate Allure report'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'allure-report'
+      ArtifactName: 'AllureReport'
