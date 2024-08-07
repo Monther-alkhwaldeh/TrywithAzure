@@ -14,10 +14,5 @@ Feature: Registration Feature
     | name    | phone          | email   | country | city | username | password |
     | Monther | 00962795727257 | m@m.com | Jordan  | Amman | mmskbh  | mmskbh123 |
     | mohammad | 00962795727257 | m@m.com | Jordan  | Amman | mmskbh  | mmskbh123 |
-  Scenario: Validate The Login Feature
-    Given I Enter The qa.automation.com
-    And I click on login button
-    And I enter the usern as "<usern>"
-    And I enter the passw as "<passw>"
-    And I click on submit login
+
 

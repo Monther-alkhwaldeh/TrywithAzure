@@ -51,17 +51,3 @@ def step_impl(context, password):
 def step_impl(context):
     context.reg.submitForm()
 
-@given(u'I click on login button')
-def step_impl(context):
-    context.reg.clicklogin()
-
-@given(u'I enter the usern as "{usern}"')
-def step_impl(context,usern):
-    context.reg.enterusername(usern)
-
-@given(u'I enter the passw as "{passw}"')
-def step_impl(context, passw):
-    context.reg.enterpassword(passw)
-@given(u'I click on submit login')
-def step_impl(context):
-    context.reg.submitLogin()

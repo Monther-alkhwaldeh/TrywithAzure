@@ -33,20 +33,3 @@ class RegistrationPage(BasePage):
 
     def submitForm(self):
         self.click("submit_XPATH")
-
-    def clicklogin(self):
-        self.click("loginForm_TAGNAME")
-    # def enterusername(self, user):
-    #     self.type("enteruser_XPATH", user)
-    def movetologin(self):
-        self.moveTo("loginpage_XPATH")
-
-    def enterusername(self, user):
-        self.type("enteruser_XPATH", user)
-
-    def enterpassword(self, passw):
-        self.type("enterpass_XPATH", passw)
-
-    def submitLogin(self):
-        self.click("clicksubmit_XPATH")
-        time.sleep(2)
