@@ -9,16 +9,17 @@ pool:
 steps:
   - task: UsePythonVersion@0
     inputs:
-      versionSpec: '3.x'
+      versionSpec: '3.x'  # Use the appropriate Python version for your project
       addToPath: true
 
   - script: python -m venv .venv
     displayName: 'Create virtual environment'
 
-  - script: ./.venv/bin/pip install -r requirements.txt
+  - script: ./.venv/bin/pip install -r requirments.txt
     displayName: 'Install dependencies'
+    workingDirectory: $(Build.SourcesDirectory)  # Ensure this points to the directory where requirements.txt is located
 
-  - script: ./.venv/bin/behave features
+  - script: ./.venv/bin/behave
     displayName: 'Run Behave tests'
 
   - task: PublishTestResults@2
@@ -33,7 +34,7 @@ steps:
       sudo apt-get install allure
     displayName: 'Install Allure'
 
-  - script: behave -f allure_behave.formatter:AllureFormatter -o allure_reports/  features\registration.feature
+  - script: allure generate allure-results -o allure-report
     displayName: 'Generate Allure report'
 
   - task: PublishBuildArtifacts@1
